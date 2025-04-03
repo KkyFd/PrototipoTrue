@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoTrue.Views.MainPage"
+             Title="Ruina"
+             BackgroundColor="#1F1F1F">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="10"
+            HorizontalOptions="Center">
+            <Image Source="lor_logo.png"
+                   WidthRequest="400"
+                   HeightRequest="100" 
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,0"/>
+            <Image Source="lor_logo2.png"
+                   WidthRequest="350"
+                   HeightRequest="200"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,0"/>
+            <Label Text="Welcome to the Library!"
+                   TextColor="#EDC381"
+                   FontSize="30" 
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,-10" />
+            <Image Source="header.png"
+                   WidthRequest="250"
+                   HeightRequest="50"
+                   HorizontalOptions="Center"
+                   Margin="0"/>
+
+            <ImageButton Source="invitationicon.png"
+                         WidthRequest="100"
+                         HeightRequest="100"
+                         HorizontalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Clicked="onFlyoutIconClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

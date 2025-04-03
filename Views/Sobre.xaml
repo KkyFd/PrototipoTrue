@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoTrue.Views.Sobre"
+             Title="Sobre"
+             BackgroundColor="#1F1F1F">
+    <!-- Tive que mudar boa parte disso porque tava horrível no mobile -->
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="2">
+            <Label 
+            Text="Sobre"
+            FontSize="42"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            TextColor="#EDC381"
+            Margin="0,0,0,0"/>
+
+            <Image Source="header.png"
+               WidthRequest="150"
+               HeightRequest="20"
+               HorizontalOptions="Center"/>
+            <Image Source="credenzaicon.png"
+               WidthRequest="150"
+               HeightRequest="150"
+               HorizontalOptions="Center"/>
+
+            <Frame BackgroundColor="#EDC381" CornerRadius="10" Padding="15" WidthRequest="200">
+                <Label Text="Leonardo Fabricio Grégio
+                   RA: 2404761
+                   Ciência da Computação"
+                   TextColor="#1F1F1F"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center" />
+            </Frame>
+
+            <Frame BackgroundColor="#EDC381" CornerRadius="10" Padding="15" WidthRequest="200">
+                <Label Text="Altas inspirações na aestética do jogo Library of Ruina. Muito meia boca, porém pretendo melhorar.
+                   
+                   Protótipos abaixo"
+                   TextColor="#1F1F1F"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center" />
+            </Frame>
+            <ScrollView Orientation="Horizontal">
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Image Source="primeiro_prototipo.png" 
+                           HeightRequest="150"
+                           WidthRequest="250" />
+                    <Image Source="segundo_prototipo.png" 
+                           HeightRequest="150"
+                           WidthRequest="250" />
+                    <Image Source="terceiro_prototipo.png" 
+                           HeightRequest="150"
+                           WidthRequest="250" />
+                </HorizontalStackLayout>
+            </ScrollView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

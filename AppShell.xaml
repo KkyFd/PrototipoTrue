@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:PrototipoTrue.Views"
+       x:Class="PrototipoTrue.AppShell"
+       Shell.NavBarIsVisible="False"
+       Shell.FlyoutBehavior="Flyout"
+       Shell.TabBarBackgroundColor="#EDC381"
+       Shell.TabBarForegroundColor="#E63946"
+       Shell.TabBarUnselectedColor="#1F1F1F"
+       FlyoutIcon="library.png"
+       Title="Library"
+       BackgroundColor="#1F1F1F"
+       TitleColor="#E63946">
+
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout BackgroundColor="#272727" Padding="10" Spacing="5">
+            <Image Source="ruina.png" WidthRequest="200"/>
+            <Label TextColor="#FFFFFF" FontSize="15" Margin="0,10,0,0" FontAttributes="Italic" HorizontalTextAlignment="Center"
+            Text=
+"DEAR GUEST: I FORMALLY INVITE YOU TO THE LIBRARY.
+THE LIBRARY'S BOOKS CAN PROVIDE YOU WITH ALL THE
+WISDOM, WEALTH, HONOR, AND POWER YOU SEEK.
+HOWEVER, AN ORDEAL WILL AWAIT YOU IN THE LIBRARY.
+IF YOU CANNOT OVERCOME THIS ORDEAL,
+YOU WILL BE CONVERTED INTO A BOOK YOURSELF."/>
+            <Image Source="header.png"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+    
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout>
+            <Label Text="May you find your book in this place." 
+                   TextColor="#EDC381" 
+                   Margin="0,0,0,10" 
+                   HorizontalTextAlignment="Center"/>
+            <Image Source="decor.png" Margin="0,0,0,10" />
+        </VerticalStackLayout>
+        
+        
+    </Shell.FlyoutFooter>
+        
+    <!-- TODO: (Talvez) Mudar isso no futuro, aliás é bem frustrante você ter que colocar TabBar em cima do Flyout pra funcionar -->
+    <TabBar>
+        <ShellContent Title="Home" Route="MainPage" Icon="sephiroth.png" ContentTemplate="{DataTemplate views:MainPage}" />
+        <ShellContent Title="Sobre" Icon="lolang.png" ContentTemplate="{DataTemplate views:Sobre}" />
+    </TabBar>
+
+    <FlyoutItem  FlyoutDisplayOptions="AsMultipleItems" >
+        <ShellContent Title="Autores" FlyoutIcon="bankaibankaibankai.png" Icon="bankaibankaibankai.png" ContentTemplate="{DataTemplate views:Autores}" />
+        <ShellContent Title="Livros" FlyoutIcon="credenzaicon.png" Icon="credenzaicon.png" ContentTemplate="{DataTemplate views:Livros}" />
+        <ShellContent Title="Editoras" FlyoutIcon="angela.png" Icon="angela.png" ContentTemplate="{DataTemplate views:Editoras}" />
+    </FlyoutItem>
+</Shell>

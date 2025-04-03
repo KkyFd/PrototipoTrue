@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoTrue.Views.Editoras"
+             Title="Editoras"
+             BackgroundColor="#1F1F1F">
+    <ScrollView>    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <VerticalStackLayout>
+            <Label 
+                Text="Editoras"
+                FontSize="45"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                TextColor="#EDC381"
+                Margin="0,0,0,0"/>
+            <Image Source="header.png"
+                   WidthRequest="150"
+                   HeightRequest="20"
+                   HorizontalOptions="Center"
+                   Margin="0"/>
+
+            <ImageButton Source="gazeofficeicon.png"
+                   WidthRequest="200"
+                   HorizontalOptions="Center"
+                   BackgroundColor="Transparent"
+                   Clicked="OnClickedVoltar"/>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              BackgroundColor="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Frame Grid.Column="0"
+                   BackgroundColor="#764E3B" 
+                   CornerRadius="15"
+                   Padding="10"
+                   Margin="0,0,-11,0">
+                <Frame BackgroundColor="#EADFD2" 
+                       CornerRadius="10"
+                       Padding="15"
+                       WidthRequest="150">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <VerticalStackLayout x:Name="Opcoes"
+                                             Grid.Row="0"
+                                             Spacing="35">
+                            <Button Text="Pesquisar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedAction"
+                                    CommandParameter="Pesquisar"/>
+                            <Button Text="Adicionar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedAction"
+                                    CommandParameter="Adicionar"/>
+                            <Button Text="Remover"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedAction"
+                                    CommandParameter="Remover"/>
+                            <Button Text="Atualizar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedAction"
+                                    CommandParameter="Atualizar"/>
+                        </VerticalStackLayout>
+                        <Button x:Name="BackButton"
+                                Grid.Row="1"
+                                Text="Voltar"
+                                TextColor="#000000"
+                                BackgroundColor="#EDC381"
+                                IsVisible="False"
+                                Clicked="OnClickedBack"
+                                Margin="0,0,0,0"/>
+                    </Grid>
+                </Frame>
+            </Frame>
+
+            <Frame Grid.Column="1"
+                   BackgroundColor="#764E3B" 
+                   CornerRadius="15"
+                   Padding="10">
+                <Frame BackgroundColor="#EADFD2" 
+                       CornerRadius="10"
+                       Padding="15"
+                       WidthRequest="150">
+                    <VerticalStackLayout>
+                        <Label Text="Selecione uma opção"
+                               TextColor="#000000"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               x:Name="Selecao"/>
+
+                        <VerticalStackLayout x:Name="Pesquisar" IsVisible="False" Spacing="70">
+                            <Label x:Name="RightLabelPesquisar"
+                                   Text="PESQUISAR"
+                                   FontSize="20"
+                                   TextColor="#000000"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,0,0"/>
+                            <Entry  x:Name="PesquisarEntry"
+                                    Placeholder="Pesquisar Editora" 
+                                    Background="#EDC381" 
+                                    TextColor="#764E3B"
+                                    Margin="0,0,0,0"/>
+                            <Button Text="Confirmar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedConfirmar"
+                                    CommandParameter="Pesquisar"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout x:Name="Adicionar" IsVisible="False" Spacing="50">
+                            <Label Text="ADICIONAR"
+                                   FontSize="20"
+                                   TextColor="#000000"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,0,0"/>
+                            <Entry x:Name="AdicionarNome"
+                                   Placeholder="Nome da Editora" 
+                                   Background="#EDC381" 
+                                   TextColor="#764E3B"/>
+                            <Entry x:Name="AdicionarSigla"
+                                   Placeholder="Sigla da Editora"
+                                   Background="#EDC381" 
+                                   TextColor="#764E3B"/>                            
+                            <Entry x:Name="AdicionarDescrição"
+                                   Placeholder="Descrição opcional" 
+                                   Background="#EDC381" 
+                                   TextColor="#764E3B"/>
+                            <Button Text="Confirmar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedConfirmar"
+                                    CommandParameter="Adicionar"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout x:Name="Remover" IsVisible="False" Spacing="80">
+                            <Label Text="REMOVER"
+                                   FontSize="20"
+                                   TextColor="#000000"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,0,0"/>
+                            <Entry x:Name="RemoverEntry"
+                                   Placeholder="Remover Editora" 
+                                   Background="#EDC381" 
+                                   TextColor="#764E3B"/>
+                            <Button Text="Confirmar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedConfirmar"
+                                    CommandParameter="Remover"/>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout x:Name="Atualizar" IsVisible="False" Spacing="50">
+                            <Label Text="ATUALIZAR"
+                                   FontSize="20"
+                                   TextColor="#000000"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                            <Entry x:Name="CodeEntry"
+                                   Placeholder="Código"
+                                   Background="#EDC381"
+                                   TextColor="#764E3B"
+                                   Margin="0,0,0,0"/>
+                            <Entry x:Name="NewEditoraNameEntry"
+                                   Placeholder="Nome Novo"
+                                   Background="#EDC381"
+                                   TextColor="#764E3B"/>
+                            <Entry x:Name="NewEditoraSiglaEntry"
+                                   Placeholder="Sigla Nova"
+                                   Background="#EDC381"
+                                   TextColor="#764E3B"/>
+                            <Entry x:Name="NewDescricaoEditoraEntry"
+                                   Placeholder="Nova Descrição"
+                                   Background="#EDC381"
+                                   TextColor="#764E3B"
+                                   Margin="0,0,0,0"/>
+                            <Button Text="Confirmar"
+                                    TextColor="#000000"
+                                    BackgroundColor="#EDC381"
+                                    Clicked="OnClickedConfirmar"
+                                    CommandParameter="Atualizar"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+            </Frame>
+        </Grid>
+    </Grid>
+    </ScrollView>        
+</ContentPage>

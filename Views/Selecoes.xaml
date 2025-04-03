@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PrototipoTrue.Views.Selecoes"
+             Title="Selecoes">
+    <!-- TODO: Essas imagens causam um pequeno gargalo na hora de carregar a página, arrumar -->
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="10">
+
+            <ImageButton Source="gazeofficeicon.png"
+                         WidthRequest="200"
+                         HeightRequest="100"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Start"
+                         Clicked="OnClickedVoltar" />
+
+            <Image Source="header.png"
+                   WidthRequest="150"
+                   HeightRequest="30"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,0" />
+
+            <Frame BorderColor="Gold" CornerRadius="5" Padding="10" Margin="0,10,0,10" WidthRequest="200">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClickedSelecaoFrame" CommandParameter="Autores" />
+                </Frame.GestureRecognizers>
+                <ImageButton Source="bankaibankaibankai.png"
+                             WidthRequest="60"
+                             HeightRequest="60"
+                             BackgroundColor="Transparent"
+                             Clicked="OnClickedSelecaoBotao"
+                             CommandParameter="Autores" />
+            </Frame>
+
+            <Frame BorderColor="Gold" CornerRadius="5" Padding="10" Margin="0,10,0,10" WidthRequest="200">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClickedSelecaoFrame" CommandParameter="Livros" />
+                </Frame.GestureRecognizers>
+                <ImageButton Source="credenzaicon.png"
+                             WidthRequest="60"
+                             HeightRequest="60"
+                             BackgroundColor="Transparent"
+                             Clicked="OnClickedSelecaoBotao"
+                             CommandParameter="Livros" />
+            </Frame>
+
+            <Frame BorderColor="Gold" CornerRadius="5" Padding="10" Margin="0,10,0,10" WidthRequest="200">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClickedSelecaoFrame" CommandParameter="Editoras" />
+                </Frame.GestureRecognizers>
+                <ImageButton Source="angela.png"
+                             WidthRequest="60"
+                             HeightRequest="60"
+                             BackgroundColor="Transparent"
+                             Clicked="OnClickedSelecaoBotao"
+                             CommandParameter="Editoras" />
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
