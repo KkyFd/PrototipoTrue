@@ -14,12 +14,9 @@ namespace PrototipoTrue.Helpers
         public SQLiteDatabaseHelpers(string dbPath)
         {
             _conn = new SQLiteAsyncConnection(dbPath);
-            Task.Run(async () =>
-            {
-                await _conn.CreateTableAsync<Editora>();
-                await _conn.CreateTableAsync<Autor>();
-                await _conn.CreateTableAsync<Livro>();
-            }).Wait();
+            _conn.CreateTableAsync<Editora>();
+            _conn.CreateTableAsync<Autor>();
+            _conn.CreateTableAsync<Livro>();
         }
 
 
