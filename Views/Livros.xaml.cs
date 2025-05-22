@@ -39,6 +39,17 @@ public partial class Livros : ContentPage
         ConfigurarPicker(AtualizarEditoraPicker, editoras.Cast<object>().ToList());
     }
 
+    private async void livrosList_ItemTapped(object sender, ItemTappedEventArgs e)
+    {
+        if (e.Item is Livro livro)
+        {
+            await DisplayAlert($"Detalhes do Livro - ID {livro.ID}",
+                $"Nome: {livro.Nome}\nAno: {livro.Ano}\nISBN: {livro.ISBN}\nDescrição: {livro.Descricao}\nAutor: {livro.AutorNome}\nEditora: {livro.EditoraNome}",
+                "OK");
+
+        }
+    }
+
     private async Task CarregarLivros()
     {
         var livrosDoBanco = await App.Db.GetAll<Livro>();
@@ -56,17 +67,33 @@ public partial class Livros : ContentPage
 
     private void MostrarSecao(string acao)
     {
-        Pesquisar.IsVisible = acao == "Pesquisar";
-        Adicionar.IsVisible = acao == "Adicionar";
-        Remover.IsVisible = acao == "Remover";
-        Atualizar.IsVisible = acao == "Atualizar";
-        PesquisaListagem.IsVisible = acao == "Pesquisar";
+        Pesquisar.IsVisible = false;
+        Adicionar.IsVisible = false;
+        Remover.IsVisible = false;
+        Atualizar.IsVisible = false;
+
+        switch (acao)
+        {
+            case "Pesquisar":
+                Pesquisar.IsVisible = true;
+                PesquisaListagem.IsVisible = true;
+                livrosList.ItemsSource = livros;
+                break;
+            case "Adicionar":
+                Adicionar.IsVisible = true;
+                break;
+            case "Remover":
+                Remover.IsVisible = true;
+                break;
+            case "Atualizar":
+                Atualizar.IsVisible = true;
+                break;
+        }
 
         Selecao.IsVisible = false;
         Opcoes.IsVisible = false;
         BackButton.IsVisible = true;
     }
-
 
     private void ResetarVisibilidade()
     {
@@ -84,9 +111,7 @@ public partial class Livros : ContentPage
     public void OnClickedAction(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is string acao)
-        {
             MostrarSecao(acao);
-        }
     }
 
     public async void OnClickedConfirmar(object sender, EventArgs e)
@@ -126,18 +151,14 @@ public partial class Livros : ContentPage
         {
             var lista = string.Join("\n", encontrados.Select(l => $"{l.ID} - {l.Nome}"));
             await DisplayAlert("Resultado da Pesquisa", lista, "OK");
-
-            livrosList.ItemsSource = encontrados;
-            PesquisaListagem.IsVisible = true;
         }
         else
         {
             await DisplayAlert("Resultado da Pesquisa", "Nenhum livro encontrado.", "OK");
-            livrosList.ItemsSource = null;
-            PesquisaListagem.IsVisible = false;
         }
+        livrosList.ItemsSource = encontrados;
+        PesquisaListagem.IsVisible = true;
     }
-
 
     private async Task ConfirmarAdicionar()
     {
@@ -155,7 +176,7 @@ public partial class Livros : ContentPage
         }
 
         string isbn = AdicionarISBN.Text?.Trim() ?? "";
-        string descricao = AdicionarDescricao.Text?.Trim() ?? "Nenhuma descrição adicionada";
+        string descricao = AdicionarDescricao.Text?.Trim() ?? "";
 
         if (AdicionarAutorPicker.SelectedItem is not Autor autor || AdicionarEditoraPicker.SelectedItem is not Editora editora)
         {
@@ -176,11 +197,16 @@ public partial class Livros : ContentPage
         await App.Db.Insert(novoLivro);
         await DisplayAlert("Sucesso", $"Livro '{nome}' adicionado com sucesso.", "OK");
 
-        AdicionarNome.Text = AdicionarAno.Text = AdicionarISBN.Text = AdicionarDescricao.Text = "";
-        AdicionarAutorPicker.SelectedItem = AdicionarEditoraPicker.SelectedItem = null;
+        AdicionarNome.Text = "";
+        AdicionarAno.Text = "";
+        AdicionarISBN.Text = "";
+        AdicionarDescricao.Text = "";
+        AdicionarAutorPicker.SelectedItem = null;
+        AdicionarEditoraPicker.SelectedItem = null;
 
         await CarregarLivros();
     }
+
 
     private async Task ConfirmarRemover()
     {
@@ -193,14 +219,13 @@ public partial class Livros : ContentPage
         var livro = (await App.Db.GetAll<Livro>()).FirstOrDefault(l => l.ID == codigo);
         if (livro == null)
         {
-            await DisplayAlert("Erro", "Livro não encontrado para remoção.", "OK");
+            await DisplayAlert("Erro", "Livro não encontrado.", "OK");
             return;
         }
 
         await App.Db.Delete<Livro>(livro.ID);
         await DisplayAlert("Sucesso", $"Livro '{livro.Nome}' removido com sucesso.", "OK");
 
-        RemoverEntry.Text = "";
         await CarregarLivros();
     }
 
@@ -215,23 +240,15 @@ public partial class Livros : ContentPage
         var livro = (await App.Db.GetAll<Livro>()).FirstOrDefault(l => l.ID == codigo);
         if (livro == null)
         {
-            await DisplayAlert("Erro", "Livro não encontrado para atualização.", "OK");
+            await DisplayAlert("Erro", "Livro não encontrado.", "OK");
             return;
         }
 
         if (!string.IsNullOrWhiteSpace(NewLivroNameEntry.Text)) livro.Nome = NewLivroNameEntry.Text.Trim();
-        if (int.TryParse(NewLivroAnoEntry.Text, out int novoAno)) livro.Ano = novoAno;
-        if (!string.IsNullOrWhiteSpace(NewLivroISBNEntry.Text)) livro.ISBN = NewLivroISBNEntry.Text.Trim();
         if (!string.IsNullOrWhiteSpace(NewLivroDescricaoEntry.Text)) livro.Descricao = NewLivroDescricaoEntry.Text.Trim();
 
-        if (AtualizarAutorPicker.SelectedItem is Autor autor) livro.AutorID = autor.ID;
-        if (AtualizarEditoraPicker.SelectedItem is Editora editora) livro.EditoraID = editora.ID;
-
         await App.Db.Update(livro);
-        await DisplayAlert("Sucesso", $"Livro de código {codigo} atualizado com sucesso.", "OK");
-
-        CodeEntry.Text = NewLivroNameEntry.Text = NewLivroAnoEntry.Text = NewLivroISBNEntry.Text = NewLivroDescricaoEntry.Text = "";
-        AtualizarAutorPicker.SelectedItem = AtualizarEditoraPicker.SelectedItem = null;
+        await DisplayAlert("Sucesso", $"Livro atualizado com sucesso.", "OK");
 
         await CarregarLivros();
     }
@@ -242,12 +259,16 @@ public partial class Livros : ContentPage
         var filtrados = livros.Where(l =>
             l.Nome.ToLower().Contains(textoBusca) ||
             (l.AutorNome?.ToLower().Contains(textoBusca) ?? false) ||
-            (l.EditoraNome?.ToLower().Contains(textoBusca) ?? false)
+            (l.EditoraNome?.ToLower().Contains(textoBusca) ?? false) ||
+            (l.ISBN?.ToLower().Contains(textoBusca) ?? false)
         ).ToList();
+
 
         livrosList.ItemsSource = filtrados;
         PesquisaListagem.IsVisible = true;
     }
+
+
 
     private void livrosList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {

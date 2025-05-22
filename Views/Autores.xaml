@@ -65,14 +65,18 @@
                                                  Grid.Row="0"
                                                  IsVisible="False"
                                                  Spacing="5">
-                                <ListView x:Name="autoresList"
-                                          BackgroundColor="#764E3B">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextCell Text="{Binding ID}" Detail="{Binding Nome}" />
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
+                                <ScrollView HeightRequest="300" WidthRequest="200">
+                                    <ListView x:Name="autoresList"
+                                              BackgroundColor="#764E3B"
+                                              ItemTapped="autoresList_ItemTapped"
+                                              SelectionMode="Single">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextCell Text="{Binding ID}" Detail="{Binding Nome}" />
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </ScrollView>
                             </VerticalStackLayout>
                             <Button x:Name="BackButton" 
                                     Grid.Row="2" 

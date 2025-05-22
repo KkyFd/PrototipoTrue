@@ -30,15 +30,37 @@ public partial class Autores : ContentPage
 
     private void MostrarSecao(string acao)
     {
-        Pesquisar.IsVisible = acao == "Pesquisar";
-        Adicionar.IsVisible = acao == "Adicionar";
-        Remover.IsVisible = acao == "Remover";
-        Atualizar.IsVisible = acao == "Atualizar";
-        BackButton.IsVisible = true;
+        Pesquisar.IsVisible = false;
+        Adicionar.IsVisible = false;
+        Remover.IsVisible = false;
+        Atualizar.IsVisible = false;
+
+        switch (acao)
+        {
+            case "Pesquisar":
+                Pesquisar.IsVisible = true;
+                PesquisaListagem.IsVisible = true;
+                autoresList.ItemsSource = autores;
+                break;
+
+            case "Adicionar":
+                Adicionar.IsVisible = true;
+                break;
+
+            case "Remover":
+                Remover.IsVisible = true;
+                break;
+
+            case "Atualizar":
+                Atualizar.IsVisible = true;
+                break;
+        }
 
         Selecao.IsVisible = false;
         Opcoes.IsVisible = false;
+        BackButton.IsVisible = true;
     }
+
 
     private void ResetarVisibilidade()
     {
@@ -48,7 +70,6 @@ public partial class Autores : ContentPage
         Atualizar.IsVisible = false;
         BackButton.IsVisible = false;
         PesquisaListagem.IsVisible = false;
-        autoresSearchBar.IsVisible = false;
 
         Selecao.IsVisible = true;
         Opcoes.IsVisible = true;
@@ -147,6 +168,17 @@ public partial class Autores : ContentPage
         await CarregarAutores();
     }
 
+    private async void autoresList_ItemTapped(object sender, ItemTappedEventArgs e)
+    {
+        if (e.Item is Autor autor)
+        {
+            await DisplayAlert("Detalhes do Autor",
+                $"ID: {autor.ID}\nNome: {autor.Nome}\nPseudônimo: {autor.Pseudonimo}\nDescrição: {autor.Descricao}",
+                "OK");
+        }
+    }
+
+
     private async Task ConfirmarAtualizar()
     {
         if (!int.TryParse(CodeEntry.Text?.Trim(), out int id))
@@ -191,8 +223,11 @@ public partial class Autores : ContentPage
         else
         {
             var filtrados = autores.Where(a =>
-                (a.Nome?.ToLower().Contains(textoBusca) ?? false)
+                (a.Nome?.ToLower().Contains(textoBusca) ?? false) ||
+                (a.Pseudonimo?.ToLower().Contains(textoBusca) ?? false) ||
+                (a.Descricao?.ToLower().Contains(textoBusca) ?? false)
             ).ToList();
+
 
             autoresList.ItemsSource = filtrados;
         }

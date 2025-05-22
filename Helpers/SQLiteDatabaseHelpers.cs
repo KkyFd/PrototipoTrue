@@ -14,10 +14,14 @@ namespace PrototipoTrue.Helpers
         public SQLiteDatabaseHelpers(string dbPath)
         {
             _conn = new SQLiteAsyncConnection(dbPath);
-            _conn.CreateTableAsync<Editora>().Wait();
-            _conn.CreateTableAsync<Autor>().Wait();
-            _conn.CreateTableAsync<Livro>().Wait();
+            Task.Run(async () =>
+            {
+                await _conn.CreateTableAsync<Editora>();
+                await _conn.CreateTableAsync<Autor>();
+                await _conn.CreateTableAsync<Livro>();
+            }).Wait();
         }
+
 
         public Task<int> Insert<T>(T item) where T : class, new()
         {
@@ -46,8 +50,8 @@ namespace PrototipoTrue.Helpers
         public Task<List<T>> Search<T>(string columnName, string search) where T : class, new()
         {
             string tablename = typeof(T).Name;
-            string sql = $"SELECT * FROM {tablename} WHERE {columnName} LIKE ?";
-            return _conn.QueryAsync<T>(sql, $"%{search}%");
+            string sql = $"SELECT * FROM {tablename} WHERE LOWER({columnName}) LIKE LOWER(?)";
+            return _conn.QueryAsync<T>(sql, $"%{search.ToLower()}%");
         }
 
         public async Task Purge<T>() where T : class, new()
