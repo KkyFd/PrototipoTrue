@@ -4,209 +4,133 @@
              x:Class="PrototipoTrue.Views.Autores"
              Title="Autores"
              BackgroundColor="#1F1F1F">
-    <ScrollView>    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <VerticalStackLayout>
-            <Label 
-                Text="Autores"
-                FontSize="45"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
-                TextColor="#EDC381"
-                Margin="0,0,0,0"/>
-            <Image Source="header.png"
-                   WidthRequest="150"
-                   HeightRequest="20"
-                   HorizontalOptions="Center"
-                   Margin="0"/>
 
-            <ImageButton Source="gazeofficeicon.png"
-                   WidthRequest="200"
-                   HorizontalOptions="Center"
-                   BackgroundColor="Transparent"
-                   Clicked="OnClickedVoltar"/>
+    <ScrollView>
+        <Grid RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        </VerticalStackLayout>
+            <VerticalStackLayout Padding="0" Spacing="10">
+                <Label Text="Autores"
+                       FontSize="45"
+                       HorizontalOptions="Center"
+                       TextColor="#EDC381" />
+                <Image Source="header.png"
+                       WidthRequest="150"
+                       HeightRequest="20"
+                       HorizontalOptions="Center" />
+                <ImageButton Source="gazeofficeicon.png"
+                             WidthRequest="200"
+                             HorizontalOptions="Center"
+                             BackgroundColor="Transparent"
+                             Clicked="OnClickedVoltar" />
+            </VerticalStackLayout>
 
-        <Grid Grid.Row="1"
-              HorizontalOptions="Center"
-              VerticalOptions="Center"
-              BackgroundColor="Transparent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1"
+                  ColumnSpacing="20"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Frame Grid.Column="0"
-                   BackgroundColor="#764E3B" 
-                   CornerRadius="15"
-                   Padding="10"
-                   Margin="0,0,-11,0">
-                <Frame BackgroundColor="#EADFD2" 
-                       CornerRadius="10"
-                       Padding="15"
-                       WidthRequest="150">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                <Frame Grid.Column="0"
+                       BackgroundColor="#764E3B"
+                       CornerRadius="15"
+                       Padding="10"
+                       Margin="0,0,-25,0">
+                    <Frame BackgroundColor="#EADFD2"
+                           CornerRadius="10"
+                           Padding="15">
+                        <Grid RowSpacing="15">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                        <VerticalStackLayout x:Name="Opcoes"
-                                 Grid.Row="0"
-                                 Spacing="35">
-                            <Button Text="Pesquisar"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedAction"
-                                    CommandParameter="Pesquisar"/>
-                            <Button Text="Adicionar"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedAction"
-                                    CommandParameter="Adicionar"/>
-                            <Button Text="Remover"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedAction"
-                                    CommandParameter="Remover"/>
-                            <Button Text="Atualizar"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedAction"
-                                    CommandParameter="Atualizar"/>
-                        </VerticalStackLayout>
-                        <Button x:Name="BackButton"
-                                Grid.Row="1"
-                                Text="Voltar"
-                                TextColor="#000000"
-                                BackgroundColor="#EDC381"
-                                IsVisible="False"
-                                Clicked="OnClickedBack"
-                                Margin="0,0,0,0"/>
-                    </Grid>
-                </Frame>
-            </Frame>
-
-
-            <Frame Grid.Column="1"
-                   BackgroundColor="#764E3B" 
-                   CornerRadius="15"
-                   Padding="10">
-                <Frame BackgroundColor="#EADFD2" 
-                       CornerRadius="10"
-                       Padding="15"
-                       WidthRequest="150">
-                    <VerticalStackLayout>
-                        <Label Text="Selecione uma opção"
-                               TextColor="#000000"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               x:Name="Selecao"/>
-                            <!-- Talvez trocar as seções de todas as páginas pra uma grid seria melhor? Decidir -->
-                        <VerticalStackLayout x:Name="Pesquisar" IsVisible="False" Spacing="60">
-                            <Label x:Name="RightLabelPesquisar"
-                                   Text="PESQUISAR"
-                                   FontSize="20"
-                                   TextColor="#000000"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Margin="0,0,0,0"/>
-                            <Entry  x:Name="PesquisarEntry"
-                                    Placeholder="Pesquisar Autor" 
-                                    Background="#EDC381" 
-                                    TextColor="#764E3B"
-                                    Margin="0,0,0,0"/>
-                            <Button Text="Confirmar"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedConfirmar"
-                                    CommandParameter="Pesquisar"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout x:Name="Adicionar" IsVisible="False" Spacing="60">
-                            <Label Text="ADICIONAR"
-                                   FontSize="20"
-                                   TextColor="#000000"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Margin="0,0,0,0"/>
-                            <Entry x:Name="AdicionarNome"
-                                   Placeholder="Nome do Autor" 
-                                   Background="#EDC381" 
-                                   TextColor="#764E3B"/>
-                            <Entry x:Name="AdicionarPseudonimo"
-                                   Placeholder="Pseudonimo do Autor" 
-                                   Background="#EDC381" 
-                                   TextColor="#764E3B"/>
-                            <Entry x:Name="AdicionarDescrição"
-                                   Placeholder="Descrição opcional" 
-                                   Background="#EDC381" 
-                                   TextColor="#764E3B"/>
-                            <Button Text="Confirmar"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedConfirmar"
-                                    CommandParameter="Adicionar"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout x:Name="Remover" IsVisible="False" Spacing="100">
-                            <Label Text="REMOVER"
-                                   FontSize="20"
-                                   TextColor="#000000"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Margin="0,0,0,0"/>
-                            <Entry x:Name="RemoverEntry"
-                                   Placeholder="Remover Autor" 
-                                   Background="#EDC381" 
-                                   TextColor="#764E3B"/>
-                            <Button Text="Confirmar"
-                                    TextColor="#000000"
-                                    BackgroundColor="#EDC381"
-                                    Clicked="OnClickedConfirmar"
-                                    CommandParameter="Remover"/>
+                            <VerticalStackLayout x:Name="Opcoes"
+                                                 Grid.Row="0"
+                                                 Spacing="35">
+                                <Button Text="Pesquisar" CommandParameter="Pesquisar" Clicked="OnClickedAction" BackgroundColor="#EDC381"/>
+                                <Button Text="Adicionar" CommandParameter="Adicionar" Clicked="OnClickedAction" BackgroundColor="#EDC381"/>
+                                <Button Text="Remover" CommandParameter="Remover" Clicked="OnClickedAction" BackgroundColor="#EDC381"/>
+                                <Button Text="Atualizar" CommandParameter="Atualizar" Clicked="OnClickedAction" BackgroundColor="#EDC381"/>
                             </VerticalStackLayout>
 
-                        <VerticalStackLayout x:Name="Atualizar" IsVisible="False" Spacing="50">
-                                <Label Text="ATUALIZAR"
-                                   FontSize="20"
-                                   TextColor="#000000"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                                <Entry x:Name="CodeEntry"
-                                       Placeholder="Código"
-                                       Background="#EDC381"
-                                       TextColor="#764E3B"
-                                       Margin="0,0,0,0"/>                            
-                                <Entry x:Name="NewAutorNameEntry"
-                                       Placeholder="Novo Nome"
-                                       Background="#EDC381"
-                                       TextColor="#764E3B"/>
-                                <Entry x:Name="NewAutorPseudonimoEntry"
-                                       Placeholder="Novo Pseudonimo"
-                                       Background="#EDC381"
-                                       TextColor="#764E3B"/>
-                            <Entry x:Name="NewAutorDescriçãoEntry"
-                                       Placeholder="Nova Descrição"
-                                       Background="#EDC381"
-                                       TextColor="#764E3B"
-                                       Margin="0,0,0,10"/>
-                            <Button Text="Confirmar"
-                                        TextColor="#000000"
-                                        BackgroundColor="#EDC381"
-                                        Clicked="OnClickedConfirmar"
-                                        CommandParameter="Atualizar"/>
+                            <VerticalStackLayout x:Name="PesquisaListagem"
+                                                 Grid.Row="0"
+                                                 IsVisible="False"
+                                                 Spacing="5">
+                                <ListView x:Name="autoresList"
+                                          BackgroundColor="#764E3B">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextCell Text="{Binding ID}" Detail="{Binding Nome}" />
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </VerticalStackLayout>
-                    </VerticalStackLayout>
+                            <Button x:Name="BackButton" 
+                                    Grid.Row="2" 
+                                    Text="Voltar" 
+                                    Clicked="OnClickedBack" 
+                                    BackgroundColor="#EDC381" 
+                                    VerticalOptions="End" 
+                                    HorizontalOptions="Fill" />
+                        </Grid>
+                    </Frame>
                 </Frame>
-            </Frame>
+
+                <Frame Grid.Column="1"
+                       BackgroundColor="#764E3B"
+                       CornerRadius="15"
+                       Padding="10">
+                    <Frame BackgroundColor="#EADFD2"
+                           CornerRadius="10"
+                           Padding="15">
+                        <VerticalStackLayout>
+
+                            <Label Text="Selecione uma opção"
+                                   x:Name="Selecao"
+                                   HorizontalOptions="Center"
+                                   TextColor="#000000" />
+
+                            <VerticalStackLayout x:Name="Pesquisar" IsVisible="False" Spacing="30">
+                                <Label Text="PESQUISAR" FontSize="20" HorizontalOptions="Center" TextColor="#4B3B2B" />
+                                <SearchBar x:Name="autoresSearchBar" Placeholder="Buscar autor..." TextColor="#000000" BackgroundColor="#F5F0E6" TextChanged="autoresSearchBar_TextChanged"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout x:Name="Adicionar" IsVisible="False" Spacing="30">
+                                <Label Text="ADICIONAR" FontSize="20" HorizontalOptions="Center" TextColor="#4B3B2B" />
+                                <Entry x:Name="AdicionarNome" Placeholder="Nome do Autor" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Entry x:Name="AdicionarPseudonimo" Placeholder="Pseudônimo (opcional)" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Entry x:Name="AdicionarDescrição" Placeholder="Descrição (opcional)" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Button Text="Confirmar" CommandParameter="Adicionar" Clicked="OnClickedConfirmar" BackgroundColor="#EDC381" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout x:Name="Remover" IsVisible="False" Spacing="30">
+                                <Label Text="REMOVER" FontSize="20" HorizontalOptions="Center" TextColor="#4B3B2B" />
+                                <Entry x:Name="RemoverEntry" Placeholder="Código do Autor" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Button Text="Confirmar" CommandParameter="Remover" Clicked="OnClickedConfirmar" BackgroundColor="#EDC381" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout x:Name="Atualizar" IsVisible="False" Spacing="20">
+                                <Label Text="ATUALIZAR" FontSize="20" HorizontalOptions="Center" TextColor="#4B3B2B" />
+                                <Entry x:Name="CodeEntry" Placeholder="Código" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Entry x:Name="NewAutorNameEntry" Placeholder="Novo nome" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Entry x:Name="NewAutorPseudonimoEntry" Placeholder="Novo pseudônimo" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Entry x:Name="NewAutorDescriçãoEntry" Placeholder="Nova descrição" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Button Text="Confirmar" CommandParameter="Atualizar" Clicked="OnClickedConfirmar" BackgroundColor="#EDC381" />
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </Frame>
+            </Grid>
         </Grid>
-    </Grid>
-    </ScrollView>    
+    </ScrollView>
 </ContentPage>

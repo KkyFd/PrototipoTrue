@@ -1,132 +1,216 @@
+using PrototipoTrue.Models;
+using System.Collections.ObjectModel;
+
 namespace PrototipoTrue.Views;
 
 public partial class Autores : ContentPage
 {
+    private ObservableCollection<Autor> autores = new();
+
     public Autores()
     {
         InitializeComponent();
+        Inicializar();
     }
-    public void OnClickedAction(object sender, EventArgs e)
+
+    private async void Inicializar()
     {
-        var button = sender as Button;
-        string? action = button?.CommandParameter?.ToString();
+        await CarregarAutores();
+        ResetarVisibilidade();
+    }
 
-        switch (action)
-        {
-            case "Pesquisar":
-                Pesquisar.IsVisible = true;
-                Selecao.IsVisible = false;
-                Adicionar.IsVisible = false;
-                Remover.IsVisible = false;
-                Atualizar.IsVisible = false;
-                break;
+    private async Task CarregarAutores()
+    {
+        var lista = await App.Db.GetAll<Autor>();
+        autores.Clear();
+        foreach (var item in lista)
+            autores.Add(item);
+        autoresList.ItemsSource = autores;
+    }
 
-            case "Adicionar":
-                Pesquisar.IsVisible = false;
-                Selecao.IsVisible = false;
-                Adicionar.IsVisible = true;
-                Remover.IsVisible = false;
-                Atualizar.IsVisible = false;
-                break;
-
-            case "Remover":
-                Pesquisar.IsVisible = false;
-                Selecao.IsVisible = false;
-                Adicionar.IsVisible = false;
-                Remover.IsVisible = true;
-                Atualizar.IsVisible = false;
-                break;
-            case "Atualizar":
-                Pesquisar.IsVisible = false;
-                Selecao.IsVisible = false;
-                Adicionar.IsVisible = false;
-                Remover.IsVisible = false;
-                Atualizar.IsVisible = true;
-                break;
-
-        }
-        Opcoes.IsVisible = false;
+    private void MostrarSecao(string acao)
+    {
+        Pesquisar.IsVisible = acao == "Pesquisar";
+        Adicionar.IsVisible = acao == "Adicionar";
+        Remover.IsVisible = acao == "Remover";
+        Atualizar.IsVisible = acao == "Atualizar";
         BackButton.IsVisible = true;
+
+        Selecao.IsVisible = false;
+        Opcoes.IsVisible = false;
     }
 
-    public void OnClickedConfirmar(object sender, EventArgs e)
+    private void ResetarVisibilidade()
     {
-        var button = sender as Button;
-        string? action = button?.CommandParameter?.ToString();
-
-        string code = CodeEntry.Text;
-
-        switch (action)
-        {
-            case "Pesquisar":
-                string pesquisarText = PesquisarEntry.Text;
-                PesquisarEntry.Text = "";
-                DisplayAlert("Confirmar", $"Autor pesquisado: {pesquisarText}", "OK");
-                Pesquisar.IsVisible = false;
-                break;
-
-            case "Adicionar":
-                string nomeText = AdicionarNome.Text;
-                string pseudonimoText = AdicionarPseudonimo.Text;
-                string? descricaoText = AdicionarDescrição.Text?.Trim(); // Pra não crashar caso não tenha nada na entry
-                AdicionarNome.Text = "";
-                AdicionarPseudonimo.Text = "";
-                AdicionarDescrição.Text = "";
-                if (string.IsNullOrEmpty(descricaoText))
-                {
-                    descricaoText = "Nenhuma descrição adicionada";
-                }
-                DisplayAlert("Confirmar", $"Autor adicionado: {nomeText}, com o pseudonimo: {pseudonimoText}.\nDescrição: {descricaoText}", "OK");
-                Adicionar.IsVisible = false;
-                break;
-
-            case "Remover":
-                string removerText = RemoverEntry.Text;
-                RemoverEntry.Text = "";
-                DisplayAlert("Confirmar", $"Autor removido: {removerText}", "OK");
-                Remover.IsVisible = false;
-                break;
-
-            case "Atualizar":
-                string newName = NewAutorNameEntry.Text;
-                string newPseudonimo = NewAutorPseudonimoEntry.Text;
-                string newDescricao = NewAutorDescriçãoEntry.Text;
-                NewAutorNameEntry.Text = "";
-                NewAutorPseudonimoEntry.Text = "";
-                NewAutorDescriçãoEntry.Text = "";
-                CodeEntry.Text = "";
-                DisplayAlert("Atualizar", $"Autor de código {code} atualizado:\nNome para: {newName}\nPseudonimo para: {newPseudonimo}\nDescrição para: {newDescricao}", "OK");
-                Atualizar.IsVisible = false;
-                break;
-        }
-        Selecao.IsVisible = true;
-        Opcoes.IsVisible = true;
-        BackButton.IsVisible = false;
-    }
-
-    // Esse volta pras opções existentes da seleção
-    public void OnClickedBack(object sender, EventArgs e)
-    {
-        Opcoes.IsVisible = true;
-        Selecao.IsVisible = true;
         Pesquisar.IsVisible = false;
         Adicionar.IsVisible = false;
-        Atualizar.IsVisible = false;
         Remover.IsVisible = false;
+        Atualizar.IsVisible = false;
         BackButton.IsVisible = false;
+        PesquisaListagem.IsVisible = false;
+        autoresSearchBar.IsVisible = false;
+
+        Selecao.IsVisible = true;
+        Opcoes.IsVisible = true;
     }
 
-    // Esse volta pra página principal de seleções
-    public async void OnClickedVoltar(object sender, EventArgs e)
+    public void OnClickedAction(object sender, EventArgs e)
     {
-        if (Navigation.NavigationStack.Count > 1)
+        if (sender is Button btn && btn.CommandParameter is string acao)
+            MostrarSecao(acao);
+    }
+
+    public async void OnClickedConfirmar(object sender, EventArgs e)
+    {
+        if (sender is Button btn && btn.CommandParameter is string acao)
         {
-            await Navigation.PopAsync();
+            if (acao == "Pesquisar") await ConfirmarPesquisar();
+            else if (acao == "Adicionar") await ConfirmarAdicionar();
+            else if (acao == "Remover") await ConfirmarRemover();
+            else if (acao == "Atualizar") await ConfirmarAtualizar();
+            ResetarVisibilidade();
+        }
+    }
+
+    private async Task ConfirmarPesquisar()
+    {
+        string termo = autoresSearchBar.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(termo))
+        {
+            await DisplayAlert("Erro", "Digite um texto para pesquisar.", "OK");
+            return;
+        }
+
+        var lista = await App.Db.Search<Autor>("Nome", termo);
+        if (lista.Any())
+        {
+            var msg = string.Join("\n", lista.Select(a => $"{a.ID} - {a.Nome}"));
+            await DisplayAlert("Resultado", msg, "OK");
         }
         else
         {
-            await Shell.Current.GoToAsync("//MainPage");
+            await DisplayAlert("Resultado", "Nenhum autor encontrado.", "OK");
         }
+
+        autoresList.ItemsSource = null;
+        PesquisaListagem.IsVisible = true;
     }
 
+    private async Task ConfirmarAdicionar()
+    {
+        string nome = AdicionarNome.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(nome))
+        {
+            await DisplayAlert("Erro", "O nome do autor é obrigatório.", "OK");
+            return;
+        }
+
+        string pseudonimo = AdicionarPseudonimo.Text?.Trim() ?? "";
+        string descricao = AdicionarDescrição.Text?.Trim() ?? "";
+
+        Autor autor = new()
+        {
+            Nome = nome,
+            Pseudonimo = pseudonimo,
+            Descricao = descricao
+        };
+
+        await App.Db.Insert(autor);
+        await DisplayAlert("Sucesso", "Autor adicionado com sucesso.", "OK");
+
+        AdicionarNome.Text = "";
+        AdicionarPseudonimo.Text = "";
+        AdicionarDescrição.Text = "";
+
+        await CarregarAutores();
+    }
+
+    private async Task ConfirmarRemover()
+    {
+        if (!int.TryParse(RemoverEntry.Text?.Trim(), out int id))
+        {
+            await DisplayAlert("Erro", "Código inválido.", "OK");
+            return;
+        }
+
+        var autor = (await App.Db.GetAll<Autor>()).FirstOrDefault(x => x.ID == id);
+        if (autor == null)
+        {
+            await DisplayAlert("Erro", "Autor não encontrado.", "OK");
+            return;
+        }
+
+        await App.Db.Delete<Autor>(autor.ID);
+        await DisplayAlert("Sucesso", "Autor removido com sucesso.", "OK");
+
+        RemoverEntry.Text = "";
+        await CarregarAutores();
+    }
+
+    private async Task ConfirmarAtualizar()
+    {
+        if (!int.TryParse(CodeEntry.Text?.Trim(), out int id))
+        {
+            await DisplayAlert("Erro", "Código inválido.", "OK");
+            return;
+        }
+
+        var autor = (await App.Db.GetAll<Autor>()).FirstOrDefault(x => x.ID == id);
+        if (autor == null)
+        {
+            await DisplayAlert("Erro", "Autor não encontrado.", "OK");
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(NewAutorNameEntry.Text))
+            autor.Nome = NewAutorNameEntry.Text.Trim();
+        if (!string.IsNullOrWhiteSpace(NewAutorPseudonimoEntry.Text))
+            autor.Pseudonimo = NewAutorPseudonimoEntry.Text.Trim();
+        if (!string.IsNullOrWhiteSpace(NewAutorDescriçãoEntry.Text))
+            autor.Descricao = NewAutorDescriçãoEntry.Text.Trim();
+
+        await App.Db.Update(autor);
+        await DisplayAlert("Sucesso", "Autor atualizado com sucesso.", "OK");
+
+        CodeEntry.Text = "";
+        NewAutorNameEntry.Text = "";
+        NewAutorPseudonimoEntry.Text = "";
+        NewAutorDescriçãoEntry.Text = "";
+
+        await CarregarAutores();
+    }
+
+    private void autoresSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        var textoBusca = e.NewTextValue?.ToLower() ?? "";
+
+        if (string.IsNullOrWhiteSpace(textoBusca))
+        {
+            autoresList.ItemsSource = autores;
+        }
+        else
+        {
+            var filtrados = autores.Where(a =>
+                (a.Nome?.ToLower().Contains(textoBusca) ?? false)
+            ).ToList();
+
+            autoresList.ItemsSource = filtrados;
+        }
+
+        PesquisaListagem.IsVisible = true;
+    }
+
+
+    private void OnClickedBack(object sender, EventArgs e)
+    {
+        ResetarVisibilidade();
+    }
+
+    public async void OnClickedVoltar(object sender, EventArgs e)
+    {
+        if (Navigation.NavigationStack.Count > 1)
+            await Navigation.PopAsync();
+        else
+            await Shell.Current.GoToAsync("//MainPage");
+    }
 }
