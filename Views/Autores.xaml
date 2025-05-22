@@ -111,7 +111,7 @@
                             <VerticalStackLayout x:Name="Adicionar" IsVisible="False" Spacing="30">
                                 <Label Text="ADICIONAR" FontSize="20" HorizontalOptions="Center" TextColor="#4B3B2B" />
                                 <Entry x:Name="AdicionarNome" Placeholder="Nome do Autor" TextColor="#000000" BackgroundColor="#F5F0E6" />
-                                <Entry x:Name="AdicionarPseudonimo" Placeholder="Pseudônimo (opcional)" TextColor="#000000" BackgroundColor="#F5F0E6" />
+                                <Entry x:Name="AdicionarPseudonimo" Placeholder="Pseudônimo" TextColor="#000000" BackgroundColor="#F5F0E6" />
                                 <Entry x:Name="AdicionarDescrição" Placeholder="Descrição (opcional)" TextColor="#000000" BackgroundColor="#F5F0E6" />
                                 <Button Text="Confirmar" CommandParameter="Adicionar" Clicked="OnClickedConfirmar" BackgroundColor="#EDC381" />
                             </VerticalStackLayout>
