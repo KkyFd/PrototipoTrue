@@ -36,6 +36,9 @@ public partial class Selecoes : ContentPage
             case "Editoras":
                 await Navigation.PushAsync(new Editoras());
                 break;
+            case "Usuarios":
+                await Navigation.PushAsync(new Usuarios());
+                break;
             default:
                 await DisplayAlert("Erro", $"Opção não encontrada: {option}", "OK");
                 break;

@@ -17,6 +17,7 @@ namespace PrototipoTrue.Helpers
             _conn.CreateTableAsync<Editora>();
             _conn.CreateTableAsync<Autor>();
             _conn.CreateTableAsync<Livro>();
+            _conn.CreateTableAsync<Usuario>();
         }
 
 

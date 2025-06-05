@@ -56,6 +56,19 @@
                              CommandParameter="Editoras" />
             </Frame>
 
+
+            <Frame BorderColor="Gold" CornerRadius="5" Padding="10" Margin="0,10,0,10" WidthRequest="200">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnClickedSelecaoFrame" CommandParameter="Usuarios" />
+                </Frame.GestureRecognizers>
+                <ImageButton Source="lolang.png"
+                             WidthRequest="60"
+                             HeightRequest="60"
+                             BackgroundColor="Transparent"
+                             Clicked="OnClickedSelecaoBotao"
+                             CommandParameter="Usuarios" />
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

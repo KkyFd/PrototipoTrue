@@ -50,5 +50,6 @@ YOU WILL BE CONVERTED INTO A BOOK YOURSELF."/>
         <ShellContent Title="Autores" FlyoutIcon="bankaibankaibankai.png" Icon="bankaibankaibankai.png" ContentTemplate="{DataTemplate views:Autores}" />
         <ShellContent Title="Livros" FlyoutIcon="credenzaicon.png" Icon="credenzaicon.png" ContentTemplate="{DataTemplate views:Livros}" />
         <ShellContent Title="Editoras" FlyoutIcon="angela.png" Icon="angela.png" ContentTemplate="{DataTemplate views:Editoras}" />
+        <ShellContent Title="Usuarios" FlyoutIcon="lolang.png" Icon="lolang.png" ContentTemplate="{DataTemplate views:Usuarios}" />        
     </FlyoutItem>
 </Shell>
